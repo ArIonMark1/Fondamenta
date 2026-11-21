@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000" fill="none">
+  <title>Abstract high-rise construction emblem</title>
+  <g fill="#FFFFFF">
+    <!-- Abstract skyline: three precisely aligned towers with a shared base -->
+    <path d="M205 690V438h112v252h-38V476h-36v214h-38Z"/>
+    <path d="M352 690V320h296v370h-42V362H394v328h-42Z"/>
+    <path d="M683 690V438h112v252h-38V476h-36v214h-38Z"/>
+    <!-- Repeated facade cuts suggest floors while keeping the mark minimal -->
+    <path d="M243 510h36v18h-36zm0 58h36v18h-36zm0 58h36v18h-36z"/>
+    <path d="M394 408h212v18H394zm0 58h212v18H394zm0 58h212v18H394zm0 58h212v18H394z"/>
+    <path d="M721 510h36v18h-36zm0 58h36v18h-36zm0 58h36v18h-36z"/>
+    <!-- Reduced tower crane, integrated over the center tower -->
+    <path d="M479 690V206h42v484h-42Z"/>
+    <path d="M256 206h488v26H256z"/>
+    <path d="M256 206v65h26v-39h197v-26H256Z"/>
+    <path d="m479 232 21-26 21 26h-42Z"/>
+    <path d="M696 232h26v104h-26z"/>
+    <path d="M686 336h46v16h-46z"/>
+    <path d="M700 352h18v22c0 16-9 25-24 25v-17c5 0 6-3 6-9v-21Z"/>
+    <!-- Shared foundation -->
+    <path d="M165 690h670v40H165z"/>
+  </g>
+</svg>
