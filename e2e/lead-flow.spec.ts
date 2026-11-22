@@ -11,6 +11,28 @@ test.afterAll(closeDb);
 const contactForm = (page: import("@playwright/test").Page) =>
   page.locator("form").filter({ has: page.locator('input[name="phone"]') });
 
+/** A "Metodo" step card, matched by its title (descriptions may contain other titles' words). */
+const metodoStep = (page: import("@playwright/test").Page, title: string) =>
+  page.locator("#metodo a").filter({ has: page.getByRole("heading", { name: title, exact: true }) });
+
+for (const { lang, step, workType, label } of [
+  { lang: "it", step: "Sopralluogo gratuito", workType: "inspection", label: "Sopralluogo gratuito" },
+  { lang: "it", step: "Cantiere", workType: "construction", label: "Cantiere" },
+  { lang: "en", step: "Turnkey handover", workType: "turnkey", label: "Turnkey handover" },
+]) {
+  test(`/${lang}: clicking the "${step}" step opens the form with that work type`, async ({ page }) => {
+    await page.goto(`/${lang}`);
+    await metodoStep(page, step).click();
+
+    await expect(page).toHaveURL(/#preventivo$/);
+    const form = contactForm(page);
+    await expect(form).toBeInViewport();
+    const select = form.locator('select[name="workType"]');
+    await expect(select).toHaveValue(workType);
+    await expect(select.locator("option:checked")).toHaveText(label);
+  });
+}
+
 test("empty submission shows field errors and saves nothing", async ({ page }) => {
   await page.goto("/it");
   const form = contactForm(page);
@@ -37,13 +59,13 @@ test("invalid submission keeps what the user typed", async ({ page }) => {
 });
 
 test("full flow: form → MongoDB → Telegram notification → confirm button → MongoDB", async ({ page, request }) => {
-  // 1. A visitor fills in and sends the form.
+  // 1. A visitor picks a "Metodo" step, lands on the form and sends it.
   await page.goto("/it");
+  await metodoStep(page, "Sopralluogo gratuito").click();
   const form = contactForm(page);
   await form.locator('input[name="name"]').fill("Giulia Bianchi");
   await form.locator('input[name="phone"]').fill("+39 345 987 6543");
   await form.locator('input[name="email"]').fill("giulia@example.com");
-  await form.locator('select[name="workType"]').selectOption("facade");
   await form.locator('textarea[name="message"]').fill("Cappotto termico, Milano");
   await form.locator('input[name="consent"]').check();
   await form.getByRole("button", { name: "Invia richiesta" }).click();
@@ -52,14 +74,14 @@ test("full flow: form → MongoDB → Telegram notification → confirm button �
   // 2. The lead is stored as pending.
   const leads = await leadsCollection();
   const lead = await eventually(() => leads.findOne({ name: "Giulia Bianchi" }));
-  expect(lead).toMatchObject({ phone: "+39 345 987 6543", email: "giulia@example.com", workType: "facade", status: "pending", locale: "it" });
+  expect(lead).toMatchObject({ phone: "+39 345 987 6543", email: "giulia@example.com", workType: "inspection", status: "pending", locale: "it" });
   const id = lead._id.toHexString();
 
   // 3. The owner gets a Telegram message with confirm / reject buttons for this lead.
   const sent = await eventually(async () => (await telegram.calls()).find((c) => c.method === "sendMessage"));
   expect(sent.body.chat_id).toBe(String(E2E.chatId));
   expect(sent.body.text).toContain("Giulia Bianchi");
-  expect(sent.body.text).toContain("Фасад");
+  expect(sent.body.text).toContain("Безкоштовний огляд");
   expect(JSON.stringify(sent.body.reply_markup)).toContain(`confirm:${id}`);
 
   // 4. The owner presses "Підтвердити": Telegram calls our webhook.

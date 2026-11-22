@@ -1,5 +1,6 @@
 import { ObjectId } from "mongodb";
 import { describe, expect, it, vi } from "vitest";
+import { workTypes } from "@/lib/leads";
 import {
   callTelegram,
   changeKeyboard,
@@ -20,6 +21,16 @@ describe("formatLeadMessage", () => {
     expect(text).toContain("Мова сайту: IT");
     expect(text).toContain("<blockquote>Ristrutturazione bagno</blockquote>");
     expect(text).toContain("<b>Статус:</b> ⏳ В очікуванні");
+  });
+
+  it("has a Ukrainian label for every work type", () => {
+    for (const workType of workTypes) {
+      const firstLine = formatLeadMessage(sampleLead({ workType })).split("\n")[0];
+      expect(firstLine).toMatch(/— \S/);
+      expect(firstLine).not.toContain("undefined");
+    }
+    expect(formatLeadMessage(sampleLead({ workType: "inspection" }))).toContain("— Безкоштовний огляд");
+    expect(formatLeadMessage(sampleLead({ workType: "turnkey" }))).toContain("— Під ключ");
   });
 
   it("escapes HTML in user input so Telegram does not reject the message", () => {

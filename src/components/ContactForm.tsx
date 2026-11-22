@@ -1,9 +1,10 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import { submitLead } from "@/app/actions";
 import type { Dictionary, Locale } from "@/i18n";
 import { workTypes, type LeadField, type LeadFormState } from "@/lib/leads";
+import { QUOTE_FORM_ID, WORK_TYPE_EVENT } from "./QuoteLink";
 import { BoxButton } from "./ui";
 
 const initialState: LeadFormState = { status: "idle" };
@@ -12,6 +13,19 @@ const labelCls = "grid gap-[7px] text-xs font-semibold tracking-[0.08em] text-mu
 
 export function ContactForm({ t, lang }: { t: Dictionary["form"]; lang: Locale }) {
   const [state, formAction, pending] = useActionState(submitLead, initialState);
+  const workTypeRef = useRef<HTMLSelectElement>(null);
+
+  // A QuoteLink (e.g. a "Metodo" step) was clicked: preselect its work type.
+  useEffect(() => {
+    const onWorkType = (e: Event) => {
+      const type = (e as CustomEvent<unknown>).detail;
+      if (workTypeRef.current && (workTypes as readonly unknown[]).includes(type)) {
+        workTypeRef.current.value = type as string;
+      }
+    };
+    window.addEventListener(WORK_TYPE_EVENT, onWorkType);
+    return () => window.removeEventListener(WORK_TYPE_EVENT, onWorkType);
+  }, []);
 
   const values = state.status === "invalid" || state.status === "error" ? state.values : {};
   const invalid = new Set<LeadField>(state.status === "invalid" ? state.fields : []);
@@ -19,7 +33,7 @@ export function ContactForm({ t, lang }: { t: Dictionary["form"]; lang: Locale }
     invalid.has(f) ? <span className="text-xs font-medium tracking-normal text-danger normal-case">{t.errors[f]}</span> : null;
 
   return (
-    <form action={formAction} noValidate className="reveal grid content-start gap-[18px] bg-surface p-[18px] py-7 text-ink sm:p-11">
+    <form id={QUOTE_FORM_ID} action={formAction} noValidate className="reveal scroll-mt-6 grid content-start gap-[18px] bg-surface p-[18px] py-7 text-ink sm:p-11">
       <input type="hidden" name="locale" value={lang} />
       {/* Honeypot — hidden from people, bots tend to fill it */}
       <input type="text" name="company_website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
@@ -45,7 +59,7 @@ export function ContactForm({ t, lang }: { t: Dictionary["form"]; lang: Locale }
 
       <label className={labelCls}>
         {t.type}
-        <select name="workType" defaultValue={values.workType || workTypes[0]} className="field">
+        <select ref={workTypeRef} name="workType" defaultValue={values.workType || workTypes[0]} className="field">
           {workTypes.map((w) => (
             <option key={w} value={w}>{t.types[w]}</option>
           ))}

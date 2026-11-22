@@ -1,6 +1,17 @@
 import { z } from "zod";
 
-export const workTypes = ["new_build", "renovation", "roof", "facade", "other"] as const;
+export const workTypes = [
+  "new_build",
+  "renovation",
+  "roof",
+  "facade",
+  // Steps of the "Metodo" section — each step links to the form with its type preselected.
+  "inspection",
+  "design_quote",
+  "construction",
+  "turnkey",
+  "other",
+] as const;
 export type WorkType = (typeof workTypes)[number];
 
 export const leadSchema = z.object({

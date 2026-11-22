@@ -9,6 +9,10 @@ const workTypeLabels: Record<WorkType, string> = {
   renovation: "Ремонт",
   roof: "Дах",
   facade: "Фасад",
+  inspection: "Безкоштовний огляд",
+  design_quote: "Проєкт і кошторис",
+  construction: "Будівельні роботи",
+  turnkey: "Під ключ",
   other: "Інше",
 };
 

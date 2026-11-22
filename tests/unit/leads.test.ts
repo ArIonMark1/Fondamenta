@@ -23,6 +23,10 @@ describe("leadSchema", () => {
     expect(r.data?.name).toBe("Mario Rossi");
   });
 
+  it.each(["inspection", "design_quote", "construction", "turnkey"])("accepts the Metodo step work type %s", (workType) => {
+    expect(failedFields({ ...valid, workType })).toEqual([]);
+  });
+
   it("allows an empty email and an empty message", () => {
     expect(failedFields({ ...valid, email: "", message: "" })).toEqual([]);
   });
