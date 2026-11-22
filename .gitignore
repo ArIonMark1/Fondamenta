@@ -51,3 +51,7 @@ next-env.d.ts
 .claude/settings.local.json
 /_legacy-static/
 /logo.png.svg
+
+# Postman local workspace files
+/.postman/
+/postman/
