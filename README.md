@@ -44,7 +44,7 @@ npm run dev   # http://localhost:3000
 
 | Variable | Purpose |
 |---|---|
-| `MONGODB_URI` | MongoDB connection string (Atlas, or `mongodb://127.0.0.1:27017` with `npm run db`) |
+| `MONGODB_URI` | MongoDB connection string (`npm run db`) |
 | `MONGODB_DB` | Database name (default `fondamenta`) |
 | `TELEGRAM_BOT_TOKEN` | Bot token from @BotFather |
 | `TELEGRAM_CHAT_ID` | Owner's chat ID: receives leads and is the only user allowed to press the buttons |
@@ -80,8 +80,7 @@ No database at hand? `npm run db` starts a local MongoDB that keeps its data in 
 Deployed on **Vercel**; every push to `main` goes to production.
 
 1. Add the five variables above in Vercel → Project → Settings → Environment Variables.
-2. In MongoDB Atlas → Network Access, allow Vercel's outbound IPs (`0.0.0.0/0` on the Hobby plan,
-   which has no static IPs) and use a strong database password.
+2. In MongoDB Atlas → Network Access, allow Vercel's outbound IPs and use a strong database password.
 3. Point the bot at the site: `npm run tg:webhook -- https://your-domain`.
 4. Run `npm run check:prod` to confirm everything is connected.
 
