@@ -83,8 +83,10 @@ export async function callTelegram(method: string, body: Record<string, unknown>
     console.warn(`[telegram] TELEGRAM_BOT_TOKEN not set, skipping ${method}`);
     return false;
   }
+  // Overridable so E2E tests can point the app at a local fake Bot API.
+  const apiBase = process.env.TELEGRAM_API_URL || "https://api.telegram.org";
   try {
-    const res = await fetch(`https://api.telegram.org/bot${token}/${method}`, {
+    const res = await fetch(`${apiBase}/bot${token}/${method}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
