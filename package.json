@@ -10,6 +10,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
+    "test:prod": "node --env-file-if-exists=.env node_modules/@playwright/test/cli.js test -c playwright.prod.config.ts",
     "check:prod": "node --env-file-if-exists=.env scripts/check-prod.mjs",
     "db": "node scripts/dev-db.mjs",
     "leads": "node --env-file-if-exists=.env scripts/list-leads.mjs",
