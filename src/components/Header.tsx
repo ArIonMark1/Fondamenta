@@ -3,16 +3,18 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { Dictionary, Locale } from "@/i18n";
 import { locales } from "@/i18n";
 import { site } from "@/lib/site";
 import { FacebookIcon, InstagramIcon, LinkedinIcon } from "./icons";
 import { ThemeToggle } from "./ThemeToggle";
 
-type Props = { lang: Locale; nav: Dictionary["nav"]; hours: string; quote: string };
+type Props = { lang: Locale; nav: Dictionary["nav"]; hours: string; quote: string; hasProjects: boolean };
 
-export function Header({ lang, nav, hours, quote }: Props) {
+export function Header({ lang, nav, hours, quote, hasProjects }: Props) {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -22,12 +24,15 @@ export function Header({ lang, nav, hours, quote }: Props) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // "/it#servizi" scrolls on the homepage and navigates there from other pages.
+  const home = `/${lang}`;
   const links = [
-    { href: "#top", label: nav.home },
-    { href: "#chi-siamo", label: nav.about },
-    { href: "#servizi", label: nav.services },
-    { href: "#metodo", label: nav.process },
-    { href: "#contatti", label: nav.contacts },
+    { href: `${home}#top`, label: nav.home },
+    { href: `${home}#chi-siamo`, label: nav.about },
+    { href: `${home}#servizi`, label: nav.services },
+    ...(hasProjects ? [{ href: `${home}/progetti`, label: nav.projects }] : []),
+    { href: `${home}#metodo`, label: nav.process },
+    { href: `${home}#contatti`, label: nav.contacts },
   ];
 
   return (
@@ -37,7 +42,7 @@ export function Header({ lang, nav, hours, quote }: Props) {
       }`}
     >
       <a
-        href="#top"
+        href={`${home}#top`}
         aria-label={site.name}
         className="flex flex-none items-center justify-center gap-3 bg-brand px-4 text-white lg:w-[210px] xl:w-[260px]"
       >
@@ -90,7 +95,7 @@ export function Header({ lang, nav, hours, quote }: Props) {
               {locales.map((l) => (
                 <Link
                   key={l}
-                  href={`/${l}`}
+                  href={pathname.replace(/^\/[^/]+/, `/${l}`) /* same page, other language */}
                   hrefLang={l}
                   aria-current={l === lang ? "true" : undefined}
                   className={`px-2.5 py-1.5 font-head text-xs font-bold uppercase ${

@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Inter, Space_Grotesk } from "next/font/google";
-import { getDictionary, hasLocale, locales } from "@/i18n";
+import { getDictionary, hasLocale, locales, type Locale } from "@/i18n";
 import { initTheme, THEME_KEY } from "@/lib/theme";
+import { site } from "@/lib/site";
+import { localBusinessJsonLd, siteUrl } from "@/lib/seo";
 import { InlineScript } from "@/components/InlineScript";
+import { JsonLd } from "@/components/JsonLd";
 import "../globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -28,12 +31,26 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
   const dict = getDictionary(lang);
+  // Canonical + hreflang are set per page (pageAlternates). Pages that set
+  // openGraph themselves would replace this whole object, so they don't.
   return {
+    metadataBase: new URL(siteUrl),
     title: dict.meta.title,
     description: dict.meta.description,
-    alternates: { languages: { it: "/it", en: "/en" } },
+    applicationName: site.name,
+    openGraph: {
+      type: "website",
+      siteName: site.name,
+      locale: ogLocale[lang],
+      alternateLocale: locales.filter((l) => l !== lang).map((l) => ogLocale[l]),
+      images: [{ url: "/images/hero_buildings.jpg", alt: dict.hero.imageAlt }],
+    },
+    twitter: { card: "summary_large_image" },
+    robots: { index: true, follow: true },
   };
 }
+
+const ogLocale: Record<Locale, string> = { it: "it_IT", en: "en_GB" };
 
 export default async function RootLayout({ children, params }: LayoutProps<"/[lang]">) {
   const { lang } = await params;
@@ -51,7 +68,10 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
       <head>
         <InlineScript html={themeScript} />
       </head>
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning>
+        {children}
+        <JsonLd data={localBusinessJsonLd(lang, getDictionary(lang))} />
+      </body>
     </html>
   );
 }

@@ -22,6 +22,14 @@ const maxWidth = {
 };
 const DEFAULT_MAX = 1600;
 
+// Photos whose original is smaller than their slot: enlarged ahead of time to this width.
+// Lanczos + a light sharpen gives crisper edges than the browser's on-the-fly upscale
+// (it cannot add real detail — a bigger original is always better). Saved at high
+// quality with full-resolution colour (4:4:4) so thin lines don't smear.
+const upscale = {
+  "hero_buildings": 2400, // hero background; desktop serves this file as-is (see Hero.tsx)
+};
+
 await mkdir(outDir, { recursive: true });
 const files = (await readdir(srcDir)).filter((f) => /\.(jpe?g|png|webp)$/i.test(f));
 
@@ -33,11 +41,16 @@ for (const file of files) {
   const output = path.join(outDir, `${name}.jpg`);
   const width = maxWidth[name] ?? DEFAULT_MAX;
 
-  const info = await sharp(input)
-    .rotate() // respect EXIF orientation
-    .resize({ width, withoutEnlargement: true })
-    .jpeg({ quality: 80, mozjpeg: true, progressive: true })
-    .toFile(output); // EXIF/GPS metadata is dropped by default
+  const pipeline = sharp(input).rotate(); // respect EXIF orientation
+  const info = await (upscale[name]
+    ? pipeline
+        .resize({ width: upscale[name], kernel: "lanczos3" })
+        .sharpen({ sigma: 0.8, m1: 0.6, m2: 2 })
+        .jpeg({ quality: 85, mozjpeg: true, progressive: true, chromaSubsampling: "4:4:4" })
+    : pipeline
+        .resize({ width, withoutEnlargement: true })
+        .jpeg({ quality: 80, mozjpeg: true, progressive: true })
+  ).toFile(output); // EXIF/GPS metadata is dropped by default
 
   const inSize = (await stat(input)).size;
   before += inSize;

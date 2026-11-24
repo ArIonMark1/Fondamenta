@@ -5,6 +5,7 @@ import { Lines, Tag } from "./ui";
 
 export function Contact({ t, form, lang }: { t: Dictionary["contact"]; form: Dictionary["form"]; lang: Locale }) {
   const rows = [
+    { label: t.addressLabel, value: site.addressLine, href: site.mapsUrl, external: true },
     { label: t.phoneLabel, value: site.phone, href: site.phoneHref },
     { label: t.emailLabel, value: site.email, href: `mailto:${site.email}` },
     { label: t.areaLabel, value: t.area },
@@ -22,7 +23,13 @@ export function Contact({ t, form, lang }: { t: Dictionary["contact"]; form: Dic
               <li key={r.label} className="flex flex-col border-l-[3px] border-brand pl-[18px]">
                 <small className="text-xs tracking-[0.12em] text-white/55 uppercase">{r.label}</small>
                 {r.href ? (
-                  <a href={r.href} className="font-head text-[17px] font-medium break-words hover:text-brand sm:text-xl">{r.value}</a>
+                  <a
+                    href={r.href}
+                    {...(r.external && { target: "_blank", rel: "noopener noreferrer" })}
+                    className="font-head text-[17px] font-medium break-words hover:text-brand sm:text-xl"
+                  >
+                    {r.value}
+                  </a>
                 ) : (
                   <span className="font-head text-[17px] font-medium sm:text-xl">{r.value}</span>
                 )}

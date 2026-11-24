@@ -2,12 +2,12 @@
 // "\n" inside a string renders as a line break (see <Lines />).
 const it = {
   meta: {
-    title: "Fondamenta Costruzioni — Impresa edile a Pordenone",
+    title: "Impresa edile a Porcia e Pordenone | Fondamenta Costruzioni",
     description:
-      "Costruzioni residenziali, ristrutturazioni, tetti e facciate a Pordenone e provincia. Preventivo gratuito.",
+      "Impresa edile con sede a Porcia (PN): nuove costruzioni, ristrutturazioni, tetti e facciate a Pordenone e provincia. Sopralluogo e preventivo gratuiti.",
   },
   top: { hours: "Lun – Sab: 7:30 – 18:30" },
-  nav: { home: "Home", about: "Chi siamo", services: "Servizi", process: "Metodo", contacts: "Contatti", menu: "Menu", theme: "Tema scuro" },
+  nav: { home: "Home", about: "Chi siamo", services: "Servizi", process: "Metodo", projects: "Progetti", contacts: "Contatti", menu: "Menu", theme: "Tema scuro" },
   cta: { quote: "Preventivo gratuito" },
   hero: {
     kicker: "Impresa edile a Pordenone",
@@ -18,7 +18,7 @@ const it = {
     sideText:
       "Case nuove, ristrutturazioni, tetti e facciate in tutto il Friuli Occidentale. Un unico referente, tempi certi e cantieri puliti.",
     sideCta: "Richiedi un sopralluogo",
-    imageAlt: "Operaio al lavoro sulle armature in cantiere",
+    imageAlt: "Cantiere con gru e palazzi in costruzione al tramonto",
   },
   marquee: ["Costruzioni residenziali", "Ristrutturazioni", "Tetti e coperture", "Facciate", "Cappotto termico", "Chiavi in mano"],
   about: {
@@ -51,6 +51,44 @@ const it = {
       { title: "Consegna chiavi in mano", text: "Collaudo, pulizia finale, documentazione completa e garanzia sui lavori eseguiti." },
     ],
   },
+  portfolio: {
+    tag: "i nostri cantieri",
+    title: "PROGETTI\nREALIZZATI",
+    filterLabel: "Filtra per categoria",
+    all: "Tutti",
+    categories: { renovation: "Ristrutturazioni", new_build: "Costruzioni", roof: "Tetti", facade: "Facciate" },
+    shown: "Progetti mostrati:",
+    cta: "Preventivo per un lavoro simile",
+    seeAll: "Vedi tutti i progetti",
+    demo: "Esempio",
+  },
+  beforeAfter: {
+    tag: "prima e dopo",
+    title: "LA DIFFERENZA\nSI VEDE",
+    text: "Trascina il cursore per confrontare lo stesso edificio prima e dopo il nostro intervento.",
+    before: "Prima",
+    after: "Dopo",
+    slider: "Confronto prima e dopo",
+    choose: "Scegli il progetto",
+  },
+  reviews: {
+    tag: "dicono di noi",
+    title: "RECENSIONI\nDEI CLIENTI",
+    googleLabel: "Valutazione su Google",
+    count: "recensioni",
+    seeOnGoogle: "Leggi tutte su Google",
+    stars: "su 5 stelle",
+    story: "Il progetto",
+    prev: "Recensione precedente",
+    next: "Recensione successiva",
+  },
+  projectsPage: {
+    metaTitle: "Progetti realizzati — Fondamenta Costruzioni",
+    metaDescription: "Ristrutturazioni, nuove costruzioni, tetti e facciate realizzati a Pordenone e provincia.",
+    tag: "portfolio",
+    title: "TUTTI I NOSTRI\nPROGETTI",
+    text: "Una selezione dei cantieri che abbiamo completato in Friuli Occidentale. Filtra per tipo di lavoro e chiedici un preventivo per un progetto simile.",
+  },
   why: {
     tag: "partner per il tuo successo",
     title: "IL TUO PROGETTO,\nLA NOSTRA PRIORITÀ",
@@ -67,8 +105,14 @@ const it = {
     text: "Raccontaci cosa vuoi costruire o ristrutturare: ti ricontattiamo entro 24 ore lavorative.",
     phoneLabel: "Telefono",
     emailLabel: "Email",
+    addressLabel: "Sede",
     areaLabel: "Zona di lavoro",
-    area: "Pordenone e provincia, Friuli-Venezia Giulia",
+    area: "Porcia, Pordenone e provincia, Friuli-Venezia Giulia",
+    mapTitle: "Mappa: sede di Fondamenta Costruzioni a Porcia",
+    mapShow: "Mostra la mappa",
+    mapNote: "La mappa viene caricata da Google Maps, che può impostare cookie propri.",
+    mapOpen: "Apri in Google Maps",
+    mapDirections: "Indicazioni stradali",
   },
   form: {
     name: "Nome e cognome",
@@ -102,7 +146,13 @@ const it = {
       server: "Si è verificato un errore. Riprova o chiamaci direttamente.",
     },
   },
-  footer: { language: "Lingua" },
+  footer: {
+    tagline: "Costruzioni",
+    links: "Link utili",
+    social: "Social e email",
+    hoursLabel: "Orari",
+    rights: "Tutti i diritti riservati",
+  },
 };
 
 export default it;
