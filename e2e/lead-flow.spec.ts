@@ -33,6 +33,21 @@ for (const { lang, step, workType, label } of [
   });
 }
 
+// Portfolio cards (demo content in the E2E build) link to the form with their category.
+for (const { path, title, workType } of [
+  { path: "/it", title: "Rifacimento tetto in legno ventilato", workType: "roof" },
+  { path: "/en/progetti", title: "External insulation for an apartment block", workType: "facade" },
+]) {
+  test(`${path}: a portfolio card's quote link preselects its category`, async ({ page }) => {
+    await page.goto(path);
+    const card = page.locator("li[data-category]").filter({ has: page.getByRole("heading", { name: title, exact: true }) });
+    await card.getByRole("link").click();
+
+    await expect(page).toHaveURL(/#preventivo$/);
+    await expect(contactForm(page).locator('select[name="workType"]')).toHaveValue(workType);
+  });
+}
+
 test("empty submission shows field errors and saves nothing", async ({ page }) => {
   await page.goto("/it");
   const form = contactForm(page);

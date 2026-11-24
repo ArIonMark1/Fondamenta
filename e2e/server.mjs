@@ -42,6 +42,8 @@ const env = {
   TELEGRAM_CHAT_ID: String(E2E.chatId),
   TELEGRAM_WEBHOOK_SECRET: E2E.webhookSecret,
   NEXT_TELEMETRY_DISABLED: "1",
+  // Build with the demo portfolio / before-after / reviews (hidden on the live site).
+  SHOW_DEMO_CONTENT: "1",
 };
 const next = (args) => spawn(process.execPath, ["node_modules/next/dist/bin/next", ...args], { env, stdio: "inherit" });
 

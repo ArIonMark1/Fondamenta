@@ -2,12 +2,12 @@ import type { Dictionary } from "./it";
 
 const en: Dictionary = {
   meta: {
-    title: "Fondamenta Costruzioni — Building company in Pordenone",
+    title: "Building company in Porcia & Pordenone | Fondamenta Costruzioni",
     description:
-      "Residential construction, renovations, roofing and façades in Pordenone and its province. Free quote.",
+      "Building company based in Porcia (PN): new builds, renovations, roofs and façades across Pordenone and its province. Free site visit and quote.",
   },
   top: { hours: "Mon – Sat: 7:30am – 6:30pm" },
-  nav: { home: "Home", about: "About", services: "Services", process: "Process", contacts: "Contacts", menu: "Menu", theme: "Dark mode" },
+  nav: { home: "Home", about: "About", services: "Services", process: "Process", projects: "Projects", contacts: "Contacts", menu: "Menu", theme: "Dark mode" },
   cta: { quote: "Free quote" },
   hero: {
     kicker: "Building company in Pordenone",
@@ -18,7 +18,7 @@ const en: Dictionary = {
     sideText:
       "New homes, renovations, roofs and façades across western Friuli. One point of contact, reliable timelines and tidy sites.",
     sideCta: "Book a site visit",
-    imageAlt: "Worker tying rebar on a construction site",
+    imageAlt: "Building site with cranes and buildings under construction at sunset",
   },
   marquee: ["Residential construction", "Renovations", "Roofing", "Façades", "Thermal insulation", "Turnkey projects"],
   about: {
@@ -51,6 +51,44 @@ const en: Dictionary = {
       { title: "Turnkey handover", text: "Final inspection, cleaning, complete documentation and a warranty on all work." },
     ],
   },
+  portfolio: {
+    tag: "our building sites",
+    title: "COMPLETED\nPROJECTS",
+    filterLabel: "Filter by category",
+    all: "All",
+    categories: { renovation: "Renovations", new_build: "Construction", roof: "Roofs", facade: "Façades" },
+    shown: "Projects shown:",
+    cta: "Quote for a similar job",
+    seeAll: "See all projects",
+    demo: "Sample",
+  },
+  beforeAfter: {
+    tag: "before and after",
+    title: "YOU CAN SEE\nTHE DIFFERENCE",
+    text: "Drag the handle to compare the same building before and after our work.",
+    before: "Before",
+    after: "After",
+    slider: "Before and after comparison",
+    choose: "Choose a project",
+  },
+  reviews: {
+    tag: "what clients say",
+    title: "CLIENT\nREVIEWS",
+    googleLabel: "Google rating",
+    count: "reviews",
+    seeOnGoogle: "Read them all on Google",
+    stars: "out of 5 stars",
+    story: "The project",
+    prev: "Previous review",
+    next: "Next review",
+  },
+  projectsPage: {
+    metaTitle: "Completed projects — Fondamenta Costruzioni",
+    metaDescription: "Renovations, new builds, roofs and façades completed in Pordenone and its province.",
+    tag: "portfolio",
+    title: "ALL OUR\nPROJECTS",
+    text: "A selection of the building sites we have completed in western Friuli. Filter by type of work and ask us for a quote on a similar project.",
+  },
   why: {
     tag: "partnering for success",
     title: "YOUR PROJECT,\nOUR PRIORITY",
@@ -67,8 +105,14 @@ const en: Dictionary = {
     text: "Tell us what you want to build or renovate — we'll get back to you within 24 business hours.",
     phoneLabel: "Phone",
     emailLabel: "Email",
+    addressLabel: "Office",
     areaLabel: "Service area",
-    area: "Pordenone and province, Friuli-Venezia Giulia",
+    area: "Porcia, Pordenone and province, Friuli-Venezia Giulia",
+    mapTitle: "Map: Fondamenta Costruzioni office in Porcia",
+    mapShow: "Show the map",
+    mapNote: "The map is loaded from Google Maps, which may set its own cookies.",
+    mapOpen: "Open in Google Maps",
+    mapDirections: "Get directions",
   },
   form: {
     name: "Full name",
@@ -102,7 +146,13 @@ const en: Dictionary = {
       server: "Something went wrong. Please try again or call us directly.",
     },
   },
-  footer: { language: "Language" },
+  footer: {
+    tagline: "Construction",
+    links: "Useful links",
+    social: "Social and email",
+    hoursLabel: "Opening hours",
+    rights: "All rights reserved",
+  },
 };
 
 export default en;

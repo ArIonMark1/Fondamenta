@@ -1,5 +1,27 @@
 import { Fragment, type ReactNode } from "react";
-import { ArrowIcon, TagIcon } from "./icons";
+import Link from "next/link";
+import { ArrowIcon, StarIcon, TagIcon } from "./icons";
+
+/** Five stars; the first `round(rating)` are filled. `label` is read out instead of the icons. */
+export function Stars({ rating, label, className = "" }: { rating: number; label: string; className?: string }) {
+  const filled = Math.round(rating);
+  return (
+    <span role="img" aria-label={label} className={`inline-flex gap-0.5 ${className}`}>
+      {[1, 2, 3, 4, 5].map((n) => (
+        <StarIcon key={n} className={`size-[1em] ${n <= filled ? "text-brand" : "text-line"}`} />
+      ))}
+    </span>
+  );
+}
+
+/** "Esempio" badge on placeholder content (never visible on the live site). */
+export function DemoBadge({ label, className = "" }: { label: string; className?: string }) {
+  return (
+    <span className={`bg-navy-deep/85 px-2 py-1 font-head text-[10px] font-bold tracking-[0.12em] text-white uppercase ${className}`}>
+      {label}
+    </span>
+  );
+}
 
 /** Renders "\n" in dictionary strings as <br />. */
 export function Lines({ text }: { text: string }) {
@@ -54,6 +76,8 @@ export function BoxButton({
       </i>
     </>
   );
+  // Other pages of the site: client-side navigation with prefetch. Anchors stay plain links.
+  if (href?.startsWith("/")) return <Link href={href} className={cls}>{inner}</Link>;
   if (href) return <a href={href} className={cls}>{inner}</a>;
   return (
     <button type={type ?? "button"} className={`${cls} cursor-pointer disabled:cursor-wait disabled:opacity-70`} disabled={disabled}>
